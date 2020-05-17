@@ -83,3 +83,20 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+*.iml
+.gradle
+app/local.properties
+app/.idea/caches
+app/.idea/libraries
+app/.idea/modules.xml
+app/.idea/workspace.xml
+app/.idea/navEditor.xml
+app/.idea/assetWizardSettings.xml
+.DS_Store
+app/build
+app/captures
+.externalNativeBuild
+.cxx
+
+
