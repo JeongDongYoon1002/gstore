@@ -1,11 +1,15 @@
 package gachon.mp.gstore;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,13 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
     List<Store> stores = new ArrayList<>();
     private Context context;
+    EditText edit;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-
+        edit = findViewById(R.id.edit);
+        button = findViewById(R.id.button);
 
         final ListView listview = (ListView)findViewById(R.id.listview);
 
@@ -41,14 +48,18 @@ public class MainActivity extends AppCompatActivity {
 //
 //        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true); // 현재 위치로 중심점 이동
 
-        new Thread(new Runnable() {
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
+            public void onClick(View view) {
+                final String searchQuery = edit.getText().toString();
 
-                GetApi parser = new GetApi();
-                final String text = String.valueOf(parser.getTotalCount("성남시", 1000, 0, 0, ""));
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                stores=parser.getAllXmlData("용인시");
+                        GetApi parser = new GetApi();
+                        stores=parser.getAllXmlData(searchQuery);
 
 
 
@@ -67,15 +78,18 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                }
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final StoreAdapter storeAdapter = new StoreAdapter(context, stores, listview);
-                        listview.setAdapter(storeAdapter);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                final StoreAdapter storeAdapter = new StoreAdapter(context, stores, listview);
+                                listview.setAdapter(storeAdapter);
+                            }
+                        });
                     }
-                });
+                }).start();
+
             }
-        }).start();
+        });
 
 
     }
