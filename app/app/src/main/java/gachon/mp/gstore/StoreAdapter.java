@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 
-// VocaAdapter는 Voca 객체 리스트에 있는 데이터를 ListView의 row 레이아웃으로 제공 할 수 있는 ArrayAdapter 입니다.
 public class StoreAdapter  extends ArrayAdapter<Store> {
 
     private Context context;

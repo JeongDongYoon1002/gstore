@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -20,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     List<Store> stores = new ArrayList<>();
     private Context context;
 
-    String data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 GetApi parser = new GetApi();
-                stores=parser.getAllXmlData();
-                data = "";
+                final String text = String.valueOf(parser.getTotalCount("성남시", 1000, 0, 0, ""));
+
+                stores=parser.getAllXmlData("용인시");
 
 
 
