@@ -23,7 +23,8 @@ public class StoreAdapter  extends ArrayAdapter<Store> {
 
     class UserViewHolder {
         public TextView name;
-        public TextView addr;
+        public TextView type;
+        public TextView address;
     }
 
 
@@ -78,7 +79,8 @@ public class StoreAdapter  extends ArrayAdapter<Store> {
             viewHolder.name = (TextView) rowView.findViewById(
                     R.id.store_list_name // 한 줄에 대한 레이아웃 파일(R.layout.list_item)의 구성요소,
             );
-            viewHolder.addr = (TextView) rowView.findViewById(R.id.store_list_ad);
+            viewHolder.type = (TextView) rowView.findViewById(R.id.store_list_type);
+            viewHolder.address = (TextView) rowView.findViewById(R.id.store_list_address);
 
 
             rowView.setTag(viewHolder);
@@ -104,7 +106,8 @@ public class StoreAdapter  extends ArrayAdapter<Store> {
 
         //현재 선택된 Vocal 객체를 화면에 보여주기 위해서 앞에서 미리 찾아 놓은 뷰에 데이터를 집어넣습니다.
         viewHolder.name.setText(store.getName());
-        viewHolder.addr.setText(store.getAddr());
+        viewHolder.type.setText(store.getType());
+        viewHolder.address.setText(store.getRoadAddr());
 
 
 
@@ -112,4 +115,5 @@ public class StoreAdapter  extends ArrayAdapter<Store> {
         //본 예제에서는 5개의 TextView 구성되어 있습니다.
         return rowView;
     }
+
 }

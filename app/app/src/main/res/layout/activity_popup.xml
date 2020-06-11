@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
+    android:layout_width="400dp"
     android:layout_height="wrap_content"
     android:background="#eeeeee"
     android:orientation="vertical">
@@ -35,60 +35,70 @@
             android:paddingLeft="24dp"
             android:paddingTop="24dp"
             android:paddingRight="24dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <TextView
 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="주소"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="15sp"/>
             <TextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|right"
-                android:layout_marginBottom="3dp"
-                android:gravity="left"
-                android:text="도로명 주소 : "
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text=""
+                android:textStyle="bold"
                 android:textColor="#000"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/store_addr"
+                android:textSize="15sp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
+                android:orientation="vertical">
+            <TextView
+                android:id="@+id/store_roadAddr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:gravity="center|left"
                 android:paddingLeft="15dp"
                 android:text="경기도 성남시 수정구 성남대로1379번길 17"
                 android:textColor="#000"
                 android:textSize="15sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="24dp"
-            android:paddingTop="24dp"
-            android:paddingRight="24dp">
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="15dp"
+                        android:textColor="#777"
+                        android:text="지번: "/>
             <TextView
-
+                android:id="@+id/store_addr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="3dp"
-                android:gravity="center|right"
-                android:text="지번 주소 : "
-                android:textColor="#000"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/store_addr2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:gravity="center|left"
-                android:paddingLeft="15dp"
+                android:gravity="left"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="경기도 성남시 수정구 복정동 582"
-                android:textColor="#000"
+                android:textColor="#777"
                 android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -99,21 +109,23 @@
             android:paddingRight="24dp">
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:gravity="center|left"
                 android:layout_gravity="center"
-                android:text=" 전화번호 : "
+                android:layout_marginBottom="3dp"
+                android:gravity="center"
+                android:text="전화"
+                android:textStyle="bold"
                 android:textColor="#000"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
 
             <TextView
-                android:id="@+id/store_num"
+                android:id="@+id/store_tel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
-                android:gravity="center|left"
+                android:gravity="center"
                 android:paddingLeft="15dp"
                 android:text="444-4444"
                 android:textColor="#000"
@@ -129,16 +141,20 @@
             android:paddingRight="24dp">
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginBottom="3dp"
-                android:gravity="center|left"
-                android:paddingLeft="15dp"
-                android:text="업종 : "
+                android:gravity="center"
+                android:text="업종"
+                android:textStyle="bold"
                 android:textColor="#000"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
+
 
             <TextView
+                android:id="@+id/store_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"

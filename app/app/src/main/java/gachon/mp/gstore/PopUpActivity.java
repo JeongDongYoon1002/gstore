@@ -16,13 +16,15 @@ import android.widget.Toast;
 public class PopUpActivity extends Activity {
 
     TextView store_name;
+    TextView store_type;
     TextView store_addr;
-    TextView store_num;
+    TextView store_roadAddr;
+    TextView store_tel;
     Button map_btn;
     Button call_btn;
     Button ok_btn;
     Button favorite_btn;
-    String phone;
+    String location = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,11 @@ public class PopUpActivity extends Activity {
 
 
         store_name = (TextView)findViewById(R.id.store_name);
+        store_type = (TextView)findViewById(R.id.store_type);
         store_addr = (TextView)findViewById(R.id.store_addr);
-        store_num = (TextView)findViewById(R.id.store_num);
+        store_roadAddr = (TextView)findViewById(R.id.store_roadAddr);
+        store_tel = (TextView)findViewById(R.id.store_tel);
+
         map_btn = (Button)findViewById(R.id.map_btn);
         call_btn = (Button)findViewById(R.id.call_btn);
         favorite_btn = (Button) findViewById(R.id.favorite_btn);
@@ -45,8 +50,19 @@ public class PopUpActivity extends Activity {
         if(data != null) {
 
             Bundle bundle = data.getExtras();
-            String store = bundle.getString("name");
-            store_name.setText(store);
+            Store store = bundle.getParcelable("store");
+            location = bundle.getString("location");
+            store_name.setText(store.getName());
+            store_type.setText(store.getType());
+            store_roadAddr.setText(store.getRoadAddr());
+
+            if(location.equals("")){
+                store_addr.setText(store.getAddr());
+            } else{
+                store_addr.setText(store.getAddr().split(location)[1]);
+            }
+
+            store_tel.setText(store.getTel());
         }
 
         ok_btn.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +93,7 @@ public class PopUpActivity extends Activity {
         call_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phone = store_num.getText().toString();
+                String phone = store_tel.getText().toString();
                 Intent intent= new Intent(Intent.ACTION_DIAL, Uri.parse(("tel:"+phone)));
                 startActivity(intent);
                 Toast.makeText(getApplicationContext(), "전화걸기", Toast.LENGTH_LONG).show();

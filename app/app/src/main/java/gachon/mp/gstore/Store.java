@@ -1,8 +1,11 @@
 package gachon.mp.gstore;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
-public class Store {
+public class Store implements Parcelable {
     private String name = null;
     private String lat = null;
     private String longt = null;
@@ -24,6 +27,30 @@ public class Store {
         this.tel = tel;
         this.zip = zip;
     }
+
+    protected Store(Parcel in) {
+        name = in.readString();
+        lat = in.readString();
+        longt = in.readString();
+        sigun = in.readString();
+        type = in.readString();
+        addr = in.readString();
+        roadAddr = in.readString();
+        tel = in.readString();
+        zip = in.readString();
+    }
+
+    public static final Creator<Store> CREATOR = new Creator<Store>() {
+        @Override
+        public Store createFromParcel(Parcel in) {
+            return new Store(in);
+        }
+
+        @Override
+        public Store[] newArray(int size) {
+            return new Store[size];
+        }
+    };
 
     @NonNull
     @Override
@@ -101,5 +128,23 @@ public class Store {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(lat);
+        parcel.writeString(longt);
+        parcel.writeString(sigun);
+        parcel.writeString(type);
+        parcel.writeString(addr);
+        parcel.writeString(roadAddr);
+        parcel.writeString(tel);
+        parcel.writeString(zip);
     }
 }

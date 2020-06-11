@@ -11,22 +11,22 @@ import java.util.ArrayList;
 
 public class GetApi {
 
-    public ArrayList<Store> getAllXmlData (String SIGUN) {
+    public ArrayList<Store> getAllXmlData (String SIGUN, String DONG) {
         ArrayList<Store> allStores = new ArrayList<>();
-        int totalCount = getTotalCount(SIGUN, 1000, 0, 0, "");
+        int totalCount = getTotalCount(SIGUN, DONG, 1000, 0, 0, "");
 
         for(int i=0 ; i <= totalCount/1000 ; i++){
-            allStores.addAll(getXmlData(SIGUN, 1000, i, 0, ""));
+            allStores.addAll(getXmlData(SIGUN, DONG, 1000, i, 0, ""));
         }
 
         return allStores;
     }
 
-    public ArrayList<Store> getXmlData(String SIGUN, int pSize, int pIndex, int searchType, String query){
+    public ArrayList<Store> getXmlData(String SIGUN, String DONG, int pSize, int pIndex, int searchType, String query){
         StringBuffer buffer=new StringBuffer();
         ArrayList<Store> stores = new ArrayList<>();
 
-        String queryUrl = getApiUrl(SIGUN, pSize, pIndex, searchType, query);
+        String queryUrl = getApiUrl(SIGUN, DONG, pSize, pIndex, searchType, query);
 
         try{
             URL url= new URL(queryUrl); //문자열로 된 요청 url을 URL 객체로 생성.
@@ -122,7 +122,7 @@ public class GetApi {
 
     }//getXmlData method....
 
-    public String getApiUrl (String SIGUN, int pSize, int pIndex, int searchType, String query) {
+    public String getApiUrl (String SIGUN, String DONG, int pSize, int pIndex, int searchType, String query) {
         String apiKey = "eb10e06504d3495db11fa551c6872d6b";
         String queryUrl="https://openapi.gg.go.kr/RegionMnyFacltStus?KEY=" + apiKey;
 
@@ -134,6 +134,9 @@ public class GetApi {
         }
 
         queryUrl = queryUrl + "&SIGUN_NM=" + SIGUN; // 시군명
+        if(DONG != ""){
+            queryUrl = queryUrl + "&REFINE_LOTNO_ADDR=" + DONG; // 지번주소
+        }
 
         switch(searchType){
             case 0: // 검색어 없음
@@ -141,10 +144,7 @@ public class GetApi {
             case 1: // 상호명
                 queryUrl = queryUrl + "&CMPNM_NM=" + query;
                 break;
-            case 2: // 지번주소
-                queryUrl = queryUrl + "&REFINE_LOTNO_ADDR=" + query;
-                break;
-            case 3: // 도로명주소
+            case 2: // 도로명주소
                 queryUrl = queryUrl + "&REFINE_ROADNM_ADDR=" + query;
                 break;
         }
@@ -152,9 +152,9 @@ public class GetApi {
         return queryUrl;
     } // getApiUrl method...
 
-    public int getTotalCount(String SIGUN, int pSize, int pIndex, int searchType, String query){
+    public int getTotalCount(String SIGUN, String DONG, int pSize, int pIndex, int searchType, String query){
         StringBuffer buffer=new StringBuffer();
-        String queryUrl = getApiUrl(SIGUN, pSize, pIndex, searchType, query);
+        String queryUrl = getApiUrl(SIGUN, DONG, pSize, pIndex, searchType, query);
         int totalCount = 0;
 
         try{

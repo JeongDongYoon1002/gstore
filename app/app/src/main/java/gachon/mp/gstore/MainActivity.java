@@ -53,10 +53,9 @@ public class MainActivity extends AppCompatActivity {
     //ImageButton add_btn;
 
     String address;
-    List<Store> stores = new ArrayList<>();
-    private Context context;
-    EditText edit;
-    Button button;
+    ArrayList<Store> stores = new ArrayList<>();
+    String SIGUN = "";
+    String DONG = "";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,12 +84,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        context = this;
       
     /* rer
-        context = this;
-        edit = findViewById(R.id.edit);
-        button = findViewById(R.id.button);
+
 
         final ListView listview = (ListView)findViewById(R.id.listview);
 
@@ -184,7 +181,50 @@ public class MainActivity extends AppCompatActivity {
             String areaTown = bundle.getString(("areaTown"));
             String sido = area + " " + areaTown;
             findAdr_btn.setText(sido);
+
+            String[] areas = area.split(" ");
+            if(areas.length == 2){
+                SIGUN = area.split(" ")[0];
+                DONG = area.split(" ")[1] + "%20" + areaTown;
+            }else {
+                SIGUN = area;
+                DONG = areaTown;
+            }
         }
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                GetApi parser = new GetApi();
+                stores = parser.getAllXmlData(SIGUN, DONG);
+
+
+
+
+//                for(Store store : stores){
+
+//                    if(store.getLat() != null && store.getLongt() != null){
+//                        MapPOIItem marker = new MapPOIItem();
+//                        marker.setItemName(store.getName());
+//                        marker.setTag(0);
+//                        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.valueOf(store.getLat()), Double.valueOf(store.getLongt())));
+//                        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+//                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+//
+//                        mapView.addPOIItem(marker);
+//                    }
+//                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                    }
+                });
+            }
+        }).start();
+
 
         /*
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -212,6 +252,10 @@ public class MainActivity extends AppCompatActivity {
         list_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("stores_key", stores);
+                bundle.putString("location", (String) findAdr_btn.getText());
+                listViewFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, listViewFragment).commit();
                 map_btn.setBackgroundColor(Color.parseColor("#00ff0000"));
                 list_btn.setBackgroundColor(Color.parseColor("#F2F2F2"));
@@ -258,5 +302,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 
 }
