@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -15,16 +16,29 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+
+import static androidx.core.content.ContextCompat.getSystemService;
+
 public class SearchFragment extends Fragment {
 
-    String[] names = {"LEE", "CHOI", "KIM", "JEONG", "RHO", "LEE", "CHOI", "KIM", "JEONG", "RHO", "LEE", "CHOI", "KIM", "JEONG", "RHO"};
-
+    ArrayList<Store> searchStores = new ArrayList<>();
     ListView listView;
     ScrollView scrollView;
     SearchView searchView;
+    String SIGUN = "";
+    String DONG = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        Bundle args = getArguments();
+        if(args == null){
+            Toast.makeText(getContext(), "정보를 불러오는 중입니다.", Toast.LENGTH_SHORT).show();
+        }else {
+            SIGUN = args.getString("SIGUN");
+            DONG = args.getString("DONG");
+        }
 
         View rootView = (ViewGroup) inflater.inflate(R.layout.fragment_search, container, false);
 
@@ -33,21 +47,22 @@ public class SearchFragment extends Fragment {
         searchView = (SearchView) rootView.findViewById(R.id.searchView);
         scrollView.setScrollbarFadingEnabled(true);
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(), R.layout.listviewitem, names);
-        listView.setAdapter(adapter);
+        StoreAdapter storeAdapter = new StoreAdapter(getActivity(), searchStores, listView);
+        listView.setAdapter(storeAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
                 Intent intent = new Intent(getActivity(), PopUpActivity.class);
 
-                Object obj = listView.getAdapter().getItem(position);
-                String value = obj.toString();
+                Store obj = (Store) listView.getAdapter().getItem(position);
 
                 Bundle mybundle = new Bundle();
-                mybundle.putString("name", value);
+                mybundle.putParcelable("store", obj);
+                mybundle.putString("SIGUN", SIGUN);
+                mybundle.putString("DONG", DONG);
                 intent.putExtras(mybundle);
                 startActivity(intent);
 
@@ -63,14 +78,32 @@ public class SearchFragment extends Fragment {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getActivity(), "[검색버튼클릭] 검색어 = " + query, Toast.LENGTH_LONG).show();
+            public boolean onQueryTextSubmit(final String query) {
+                searchView.clearFocus();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        GetApi parser = new GetApi();
+                        searchStores  = parser.getXmlData(SIGUN, DONG, 1000, 0, 1, query);
+
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                StoreAdapter storeAdapter = new StoreAdapter(getActivity(), searchStores, listView);
+                                listView.setAdapter(storeAdapter);
+                            }
+                        });
+
+                    }
+                }).start();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getActivity(), "입력하고있는 단어 = " + newText, Toast.LENGTH_LONG).show();
                 return true;
             }
         });

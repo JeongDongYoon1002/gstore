@@ -624,8 +624,8 @@ public class ChangeAreaActivity extends AppCompatActivity {
         complete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                final Bundle mybundle = new Bundle();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Bundle mybundle = new Bundle();
 
                 String[] areas = area.split(" ");
                 if(areas.length == 2){

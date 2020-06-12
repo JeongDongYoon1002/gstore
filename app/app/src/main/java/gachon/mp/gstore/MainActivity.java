@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Store> stores = new ArrayList<>();
     String SIGUN = "";
     String DONG = "";
+    String requestUrl = "";
     int total_count=0;
 
     @Override
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         GetApi parser = new GetApi();
                         stores = parser.getAllXmlData(SIGUN, DONG);
 
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -153,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("stores_key", stores);
-                bundle.putString("location", (String) findAdr_btn.getText());
+                bundle.putString("SIGUN", SIGUN);
+                bundle.putString("DONG", DONG);
                 listViewFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
                 map_btn.setBackgroundColor(Color.parseColor("#F2F2F2"));
@@ -169,7 +172,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("stores_key", stores);
-                bundle.putString("location", (String) findAdr_btn.getText());
+                bundle.putString("SIGUN", SIGUN);
+                bundle.putString("DONG", DONG);
                 listViewFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, listViewFragment).commit();
                 map_btn.setBackgroundColor(Color.parseColor("#00ff0000"));
@@ -183,6 +187,10 @@ public class MainActivity extends AppCompatActivity {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("SIGUN", SIGUN);
+                bundle.putString("DONG", DONG);
+                searchFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, searchFragment).commit();
                 map_btn.setBackgroundColor(Color.parseColor("#00ff0000"));
                 list_btn.setBackgroundColor(Color.parseColor("#00ff0000"));
@@ -207,11 +215,13 @@ public class MainActivity extends AppCompatActivity {
         findAdr_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddrSearchActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ChangeAreaActivity.class);
                 Bundle mybundle = new Bundle();
 
                 mybundle.putString("addr", address);
                 intent.putExtras(mybundle);
+                SIGUN="";
+                DONG="";
                 startActivityForResult(intent, 1122);
                 finish();
             }

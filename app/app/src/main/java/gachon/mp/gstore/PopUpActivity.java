@@ -24,7 +24,8 @@ public class PopUpActivity extends Activity {
     Button call_btn;
     Button ok_btn;
     Button favorite_btn;
-    String location = "";
+    String SIGUN = "";
+    String DONG = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +52,16 @@ public class PopUpActivity extends Activity {
 
             Bundle bundle = data.getExtras();
             Store store = bundle.getParcelable("store");
-            location = bundle.getString("location");
+            SIGUN = bundle.getString("SIGUN");
+            DONG = bundle.getString("DONG");
             store_name.setText(store.getName());
             store_type.setText(store.getType());
             store_roadAddr.setText(store.getRoadAddr());
 
-            if(location.equals("")){
+            if(DONG.equals("")){
                 store_addr.setText(store.getAddr());
             } else{
-                store_addr.setText(store.getAddr().split(location)[1]);
+                store_addr.setText(store.getAddr().split(DONG)[1]);
             }
 
             store_tel.setText(store.getTel());

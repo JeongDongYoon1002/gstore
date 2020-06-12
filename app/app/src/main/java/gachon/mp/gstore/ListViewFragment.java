@@ -26,7 +26,8 @@ public class ListViewFragment extends Fragment {
 
     ListView listView;
     ScrollView scrollView;
-    String location = "";
+    String SIGUN = "";
+    String DONG = "";
 
     public static ListViewFragment newInstance(List<Store> stores) {
         ListViewFragment fragment = new ListViewFragment();
@@ -40,8 +41,15 @@ public class ListViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        listStores = getArguments().getParcelableArrayList(STORESKEY);
-        location = getArguments().getString("location");
+        Bundle args = getArguments();
+        if(args == null){
+            Toast.makeText(getContext(), "리스트를 불러오는 중입니다", Toast.LENGTH_SHORT).show();
+        }else {
+            listStores = args.getParcelableArrayList(STORESKEY);
+            SIGUN = args.getString("SIGUN");
+            DONG = args.getString("DONG");
+        }
+
         View rootView = (ViewGroup) inflater.inflate(R.layout.fragment_listview, container, false);
 
         listView = (ListView)rootView.findViewById(R.id.listview);
@@ -62,7 +70,8 @@ public class ListViewFragment extends Fragment {
 
                 Bundle mybundle = new Bundle();
                 mybundle.putParcelable("store", obj);
-                mybundle.putString("location", location);
+                mybundle.putString("SIGUN", SIGUN);
+                mybundle.putString("DONG", DONG);
                 intent.putExtras(mybundle);
                 startActivity(intent);
 

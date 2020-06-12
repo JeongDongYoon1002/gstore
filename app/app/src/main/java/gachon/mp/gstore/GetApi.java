@@ -141,8 +141,9 @@ public class GetApi {
         }
 
         try {
-            queryUrl = queryUrl + "&SIGUN_NM=" + URLEncoder.encode(SIGUN, "UTF-8"); // 시군명
-
+            if(SIGUN != "") {
+                queryUrl = queryUrl + "&SIGUN_NM=" + URLEncoder.encode(SIGUN, "UTF-8"); // 시군명
+            }
             if (DONG != "") {
                 queryUrl = queryUrl + "&REFINE_LOTNO_ADDR=" + URLEncoder.encode(DONG, "UTF-8");
                 ; // 지번주소

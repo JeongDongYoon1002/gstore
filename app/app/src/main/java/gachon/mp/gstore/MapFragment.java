@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,12 +20,18 @@ public class MapFragment extends Fragment {
 
     private static final String STORESKEY = "stores_key";
     private ArrayList<Store> listStores = new ArrayList<>();
-    String location = "";
+    String SIGUN = "";
+    String DONG = "";
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-//        listStores = getArguments().getParcelableArrayList(STORESKEY);
-//        location = getArguments().getString("location");
+        Bundle args = getArguments();
+        if(args == null){
+            Toast.makeText(getActivity(), "마커를 불러오는 중입니다.", Toast.LENGTH_SHORT).show();
+        } else{
+            listStores = args.getParcelableArrayList(STORESKEY);
+            SIGUN = args.getString("SIGUN");
+            DONG = args.getString("DONG");
+        }
 
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
@@ -39,19 +46,19 @@ public class MapFragment extends Fragment {
 
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true); // 현재 위치로 중심점 이동
 
-//        <마커>
-//        for(Store store : listStores){
-//            if(store.getLat() != null && store.getLongt() != null){
-//                MapPOIItem marker = new MapPOIItem();
-//                marker.setItemName(store.getName());
-//                marker.setTag(0);
-//                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.valueOf(store.getLat()), Double.valueOf(store.getLongt())));
-//                marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-//                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-//
-//                mapView.addPOIItem(marker);
-//            }
-//        }
+
+        for(Store store : listStores){
+            if(store.getLat() != null && store.getLongt() != null){
+                MapPOIItem marker = new MapPOIItem();
+                marker.setItemName(store.getName());
+                marker.setTag(0);
+                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.valueOf(store.getLat()), Double.valueOf(store.getLongt())));
+                marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                mapView.addPOIItem(marker);
+            }
+        }
 
         return rootView;
     }
