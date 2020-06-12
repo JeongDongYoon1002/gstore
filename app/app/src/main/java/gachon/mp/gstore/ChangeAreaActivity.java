@@ -679,26 +679,29 @@ public class ChangeAreaActivity extends AppCompatActivity {
                 double longitude = gpsTracker.getLongitude();
 
                 String address = getCurrentAddress(latitude, longitude);
-
                 String split[] = address.split(" ");
-
                 area = split[2];
-
                 if(!split[3].substring(split[3].length()-1).equals("동")) {
-
                     area = area + " " + split[3];
                     if(split[4].substring(split[4].length()-1).equals("동")) {
-
                         areaTown = split[4];
                     }
                 }
                 else {
-
                     areaTown = split[3];
                 }
 
-                mybundle.putString("area", area);
-                mybundle.putString("areaTown", areaTown);
+                String[] areas = area.split(" ");
+                if(areas.length == 2){
+                    SIGUN = area.split(" ")[0];
+                    DONG = area.split(" ")[1] + " " + areaTown;
+                }else {
+                    SIGUN = areas[0];
+                    DONG = areaTown;
+                }
+
+                mybundle.putString("SIGUN", SIGUN);
+                mybundle.putString("DONG", DONG);
                 intent.putExtras(mybundle);
                 startActivity(intent);
                 finish();
