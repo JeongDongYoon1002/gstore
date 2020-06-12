@@ -15,6 +15,7 @@
             android:id="@+id/store_list_name"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15sp"
+            android:fontFamily="@font/nanum"
             android:layout_width="0dp"
             android:layout_weight="5"
             android:textSize="17sp"
@@ -30,6 +31,7 @@
             android:textSize="13sp"
             android:textStyle="italic"
             android:layout_width="0dp"
+            android:fontFamily="@font/nanum"
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:ellipsize="end"
@@ -40,6 +42,7 @@
     <TextView
         android:id="@+id/store_list_address"
         android:layout_width="match_parent"
+        android:fontFamily="@font/nanum"
         android:layout_height="match_parent"
         android:textSize="13sp"
         android:layout_marginLeft="15sp"

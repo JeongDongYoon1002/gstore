@@ -71,6 +71,7 @@
             android:layout_weight="0"
             android:background="@drawable/roundedittext"
             android:fontFamily="@font/nanum"
+            android:onClick="mOnClick"
             android:text="완료" />
 
     </LinearLayout>

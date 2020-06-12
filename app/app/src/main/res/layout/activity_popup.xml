@@ -9,14 +9,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#FAAC58">
 
         <TextView
             android:id="@+id/store_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="53dp"
+            android:layout_gravity="center"
             android:background="#FAAC58"
             android:gravity="center"
+            android:textAlignment="center"
             android:text="가게이름"
             android:textColor="#fff"
             android:textSize="20sp" />
@@ -29,7 +33,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="24dp"
@@ -101,7 +105,7 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="24dp"
@@ -110,8 +114,8 @@
 
             <TextView
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="3dp"
                 android:gravity="center"
@@ -123,9 +127,9 @@
             <TextView
                 android:id="@+id/store_tel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="3dp"
-                android:gravity="center"
+                android:gravity="left"
                 android:paddingLeft="15dp"
                 android:text="444-4444"
                 android:textColor="#000"
@@ -133,7 +137,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="24dp"
@@ -142,8 +146,8 @@
 
             <TextView
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="3dp"
                 android:gravity="center"
@@ -156,7 +160,7 @@
             <TextView
                 android:id="@+id/store_type"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="3dp"
                 android:gravity="center|left"
                 android:paddingLeft="15dp"
@@ -176,28 +180,31 @@
             <Button
                 android:id="@+id/map_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/transparent"
                 android:drawableTop="@drawable/ic_map_black_24dp"
                 android:padding='10dp'
+                android:layout_gravity="center"
                 android:text="지도 보기" />
 
             <Button
                 android:id="@+id/call_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/transparent"
                 android:drawableTop="@drawable/ic_call_black_24dp"
                 android:padding='10dp'
+                android:layout_gravity="center"
                 android:text="전화 걸기" />
 
             <Button
                 android:id="@+id/favorite_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:drawableTop="@drawable/ic_star_border_black_24dp"
                 android:background="@color/transparent"
                 android:padding = '10dp'
+                android:layout_gravity="center"
                 android:text = "즐겨찾기"/>
 
         </LinearLayout>

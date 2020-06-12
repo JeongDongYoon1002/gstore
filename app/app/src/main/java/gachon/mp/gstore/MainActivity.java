@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Store> stores = new ArrayList<>();
     String SIGUN = "";
     String DONG = "";
+    int total_count=0;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,71 +86,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-      
-    /* rer
 
-
-        final ListView listview = (ListView)findViewById(R.id.listview);
-
-        GpsTracker gpsTracker = new GpsTracker(MainActivity.this); // GpsTracker 객체 생성
-        double latitude = gpsTracker.getLatitude(); // 위도
-        double longitude = gpsTracker.getLongitude(); //경도
-
-
-//        final MapView mapView = new MapView(this);
-//        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
-//        mapViewContainer.addView(mapView);
-//
-//        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true); // 현재 위치로 중심점 이동
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String searchQuery = edit.getText().toString();
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        GetApi parser = new GetApi();
-                        stores=parser.getAllXmlData(searchQuery);
-
-
-
-
-//                for(Store store : stores){
-
-//                    if(store.getLat() != null && store.getLongt() != null){
-//                        MapPOIItem marker = new MapPOIItem();
-//                        marker.setItemName(store.getName());
-//                        marker.setTag(0);
-//                        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.valueOf(store.getLat()), Double.valueOf(store.getLongt())));
-//                        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-//                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-//
-//                        mapView.addPOIItem(marker);
-//                    }
-//                }
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                final StoreAdapter storeAdapter = new StoreAdapter(context, stores, listview);
-                                listview.setAdapter(storeAdapter);
-                            }
-                        });
-                    }
-                }).start();
-
-            }
-        });
-
-
-    }
-}
-
- rer */
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         //toolbar.setTitleTextColor(Color.parseColor("#ffff33")); //제목의 칼라
@@ -177,54 +114,28 @@ public class MainActivity extends AppCompatActivity {
         if(data != null) {
 
             Bundle bundle = data.getExtras();
-            String area = bundle.getString("area");
-            String areaTown = bundle.getString(("areaTown"));
-            String sido = area + " " + areaTown;
-            findAdr_btn.setText(sido);
+            SIGUN = bundle.getString("SIGUN");
+            DONG = bundle.getString(("DONG"));
+            String location = SIGUN + " " + DONG;
+            findAdr_btn.setText(location);
 
-            String[] areas = area.split(" ");
-            if(areas.length == 2){
-                SIGUN = area.split(" ")[0];
-                DONG = area.split(" ")[1] + "%20" + areaTown;
-            }else {
-                SIGUN = area;
-                DONG = areaTown;
-            }
+//            stores = bundle.getParcelableArrayList("all_stores");
         }
 
-
         new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                GetApi parser = new GetApi();
-                stores = parser.getAllXmlData(SIGUN, DONG);
-
-
-
-
-//                for(Store store : stores){
-
-//                    if(store.getLat() != null && store.getLongt() != null){
-//                        MapPOIItem marker = new MapPOIItem();
-//                        marker.setItemName(store.getName());
-//                        marker.setTag(0);
-//                        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.valueOf(store.getLat()), Double.valueOf(store.getLongt())));
-//                        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-//                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-//
-//                        mapView.addPOIItem(marker);
-//                    }
-//                }
-
-                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                    }
-                });
-            }
-        }).start();
 
+                        GetApi parser = new GetApi();
+                        stores = parser.getAllXmlData(SIGUN, DONG);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                            }
+                        });
+                    }
+                }).start();
 
         /*
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +151,10 @@ public class MainActivity extends AppCompatActivity {
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("stores_key", stores);
+                bundle.putString("location", (String) findAdr_btn.getText());
+                listViewFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
                 map_btn.setBackgroundColor(Color.parseColor("#F2F2F2"));
                 list_btn.setBackgroundColor(Color.parseColor("#00ff0000"));
@@ -298,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 mybundle.putString("addr", address);
                 intent.putExtras(mybundle);
                 startActivityForResult(intent, 1122);
+                finish();
             }
         });
 

@@ -41,7 +41,6 @@ public class ListViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         listStores = getArguments().getParcelableArrayList(STORESKEY);
-        Toast.makeText(getContext(), String.valueOf(listStores.size()), Toast.LENGTH_SHORT).show();
         location = getArguments().getString("location");
         View rootView = (ViewGroup) inflater.inflate(R.layout.fragment_listview, container, false);
 
@@ -63,7 +62,6 @@ public class ListViewFragment extends Fragment {
 
                 Bundle mybundle = new Bundle();
                 mybundle.putParcelable("store", obj);
-                mybundle.putString("location", location);
                 mybundle.putString("location", location);
                 intent.putExtras(mybundle);
                 startActivity(intent);

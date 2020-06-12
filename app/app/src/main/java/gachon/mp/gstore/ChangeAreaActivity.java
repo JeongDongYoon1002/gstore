@@ -28,6 +28,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +40,9 @@ public class ChangeAreaActivity extends AppCompatActivity {
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     String area, areaTown;
+    ArrayList<Store> allStores = new ArrayList<>();
+    String SIGUN = "";
+    String DONG = "";
     TextView textView;
     ArrayAdapter<CharSequence> adspin1, adspin2;
     Button complete_btn;
@@ -620,14 +624,46 @@ public class ChangeAreaActivity extends AppCompatActivity {
         complete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                Bundle mybundle = new Bundle();
+                final Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                final Bundle mybundle = new Bundle();
 
-                mybundle.putString("area", area);
-                mybundle.putString("areaTown", areaTown);
+                String[] areas = area.split(" ");
+                if(areas.length == 2){
+                    SIGUN = area.split(" ")[0];
+                    DONG = area.split(" ")[1] + " " + areaTown;
+                }else {
+                    SIGUN = areas[0];
+                    DONG = areaTown;
+                }
+
+                mybundle.putString("SIGUN", SIGUN);
+                mybundle.putString("DONG", DONG);
+
+//                <쓰레드>
+//                Thread thread = new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        GetApi parser = new GetApi();
+//                        allStores = parser.getAllXmlData(SIGUN, DONG);
+//                        mybundle.putParcelableArrayList("all_stores", allStores);
+//                        intent.putExtras(mybundle);
+//                        startActivity(intent);
+//                        finish();
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                            }
+//                        });
+//                    }
+//                });
+//
+//                try{ thread.join(); }catch (InterruptedException e) { }
+
                 intent.putExtras(mybundle);
                 startActivity(intent);
                 finish();
+
             }
         });
 

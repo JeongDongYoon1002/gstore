@@ -5,8 +5,11 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class GetApi {
@@ -30,7 +33,11 @@ public class GetApi {
 
         try{
             URL url= new URL(queryUrl); //문자열로 된 요청 url을 URL 객체로 생성.
-            InputStream is= url.openStream(); //url위치로 입력스트림 연결
+//            InputStream is= url.openStream(); //url위치로 입력스트림 연결
+
+            URLConnection urlcon = url.openConnection();
+            urlcon.setReadTimeout(10000);
+            InputStream is = urlcon.getInputStream();
 
             String name=null, lat=null, longt=null, sigun=null, type=null, addr=null, roadAddr=null, tel=null, zip=null;
 
@@ -133,21 +140,27 @@ public class GetApi {
             queryUrl = queryUrl + "&pIndex=" + pIndex;
         }
 
-        queryUrl = queryUrl + "&SIGUN_NM=" + SIGUN; // 시군명
-        if(DONG != ""){
-            queryUrl = queryUrl + "&REFINE_LOTNO_ADDR=" + DONG; // 지번주소
-        }
+        try {
+            queryUrl = queryUrl + "&SIGUN_NM=" + URLEncoder.encode(SIGUN, "UTF-8"); // 시군명
 
-        switch(searchType){
-            case 0: // 검색어 없음
-                break;
-            case 1: // 상호명
-                queryUrl = queryUrl + "&CMPNM_NM=" + query;
-                break;
-            case 2: // 도로명주소
-                queryUrl = queryUrl + "&REFINE_ROADNM_ADDR=" + query;
-                break;
-        }
+            if (DONG != "") {
+                queryUrl = queryUrl + "&REFINE_LOTNO_ADDR=" + URLEncoder.encode(DONG, "UTF-8");
+                ; // 지번주소
+            }
+
+            switch (searchType) {
+                case 0: // 검색어 없음
+                    break;
+                case 1: // 상호명
+                    queryUrl = queryUrl + "&CMPNM_NM=" + URLEncoder.encode(query, "UTF-8");
+                    ;
+                    break;
+                case 2: // 도로명주소
+                    queryUrl = queryUrl + "&REFINE_ROADNM_ADDR=" + URLEncoder.encode(query, "UTF-8");
+                    ;
+                    break;
+            }
+        }catch (UnsupportedEncodingException e){}
 
         return queryUrl;
     } // getApiUrl method...
@@ -160,6 +173,7 @@ public class GetApi {
         try{
             URL url= new URL(queryUrl); //문자열로 된 요청 url을 URL 객체로 생성.
             InputStream is= url.openStream(); //url위치로 입력스트림 연결
+
 
             XmlPullParserFactory factory= XmlPullParserFactory.newInstance();//xml파싱을 위한
             XmlPullParser xpp= factory.newPullParser();
