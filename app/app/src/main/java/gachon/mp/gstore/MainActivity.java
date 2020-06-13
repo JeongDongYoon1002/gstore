@@ -1,50 +1,35 @@
 package gachon.mp.gstore;
 
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import net.daum.mf.map.api.MapPOIItem;
-import net.daum.mf.map.api.MapPoint;
-import net.daum.mf.map.api.MapView;
-
 import java.util.ArrayList;
-import java.util.List;
+
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     public static Context context;
 
+    // Fragments
     ListViewFragment listViewFragment;
     MapFragment mapFragment;
     SearchFragment searchFragment;
     FavoriteFragment favoriteFragment;
   
-
+    // Buttons
     Button list_btn;
     Button map_btn;
     Button search_btn;
@@ -52,12 +37,10 @@ public class MainActivity extends AppCompatActivity {
     Button favorite_btn;
     //ImageButton add_btn;
 
-    String address;
+    TextView loadingMessage;
     ArrayList<Store> stores = new ArrayList<>();
     String SIGUN = "";
     String DONG = "";
-    String requestUrl = "";
-    int total_count=0;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,17 +86,15 @@ public class MainActivity extends AppCompatActivity {
         findAdr_btn = (Button) findViewById(R.id.findAdr_btn);
         favorite_btn=(Button) findViewById(R.id.favorite_btn);
 
+        loadingMessage = (TextView) findViewById(R.id.loadingMessage);
+
         listViewFragment = new ListViewFragment();
         mapFragment = new MapFragment();
         searchFragment = new SearchFragment();
         favoriteFragment = new FavoriteFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
-        map_btn.setBackgroundColor(Color.parseColor("#F2F2F2"));
-
         Intent data = getIntent();
         if(data != null) {
-
             Bundle bundle = data.getExtras();
             SIGUN = bundle.getString("SIGUN");
             DONG = bundle.getString(("DONG"));
@@ -121,23 +102,29 @@ public class MainActivity extends AppCompatActivity {
             findAdr_btn.setText(location);
 
 //            stores = bundle.getParcelableArrayList("all_stores");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    GetApi parser = new GetApi();
+                    stores = parser.getAllXmlData(SIGUN, DONG);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingMessage.setText("");
+                            map_btn.performClick();
+                        }
+                    });
+                }
+            }).start();
         }
 
-        new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        GetApi parser = new GetApi();
-                        stores = parser.getAllXmlData(SIGUN, DONG);
 
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                            }
-                        });
-                    }
-                }).start();
+
+
+
 
         /*
         add_btn.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putParcelableArrayList("stores_key", stores);
                 bundle.putString("SIGUN", SIGUN);
                 bundle.putString("DONG", DONG);
-                listViewFragment.setArguments(bundle);
+                mapFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, mapFragment).commit();
                 map_btn.setBackgroundColor(Color.parseColor("#F2F2F2"));
                 list_btn.setBackgroundColor(Color.parseColor("#00ff0000"));
@@ -216,10 +203,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ChangeAreaActivity.class);
-                Bundle mybundle = new Bundle();
-
-                mybundle.putString("addr", address);
-                intent.putExtras(mybundle);
                 SIGUN="";
                 DONG="";
                 startActivityForResult(intent, 1122);

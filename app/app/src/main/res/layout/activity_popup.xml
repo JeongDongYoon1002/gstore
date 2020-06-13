@@ -15,11 +15,9 @@
 
         <TextView
             android:id="@+id/store_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="53dp"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:textAlignment="center"
             android:text="가게이름"
             android:textColor="#fff"
             android:textSize="20sp" />
@@ -216,8 +214,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:gravity="center">
 
         <Button
             android:id="@+id/ok_btn"
