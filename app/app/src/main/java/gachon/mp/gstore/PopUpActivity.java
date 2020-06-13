@@ -27,6 +27,7 @@ public class PopUpActivity extends Activity {
     String SIGUN = "";
     String DONG = "";
 
+    Store store;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,7 @@ public class PopUpActivity extends Activity {
         if(data != null) {
 
             Bundle bundle = data.getExtras();
-            Store store = bundle.getParcelable("store");
+            store = bundle.getParcelable("store");
             SIGUN = bundle.getString("SIGUN");
             DONG = bundle.getString("DONG");
             store_name.setText(store.getName());
@@ -80,12 +81,8 @@ public class PopUpActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), storeViewAcitvity.class);
-
-                String name = store_name.getText().toString();
-                String addr = store_addr.getText().toString();
                 Bundle mybundle = new Bundle();
-                mybundle.putString("name", name);
-                mybundle.putString("addr", addr);
+                mybundle.putParcelable("store", store);
                 intent.putExtras(mybundle);
                 startActivity(intent);
                 Toast.makeText(getApplicationContext(), "지도보기", Toast.LENGTH_LONG).show();

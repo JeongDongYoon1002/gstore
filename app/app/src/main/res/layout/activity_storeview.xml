@@ -55,11 +55,10 @@
         android:text="지역을 선택해주세요."
         android:textSize="20dp" />
 
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/map_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 

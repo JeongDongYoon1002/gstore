@@ -4,17 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 public class storeViewAcitvity extends AppCompatActivity {
 
     ImageButton back_btn;
     TextView store_name;
     TextView store_addr;
+    Store store;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +40,39 @@ public class storeViewAcitvity extends AppCompatActivity {
         if(data != null) {
 
             Bundle bundle = data.getExtras();
-            String store = bundle.getString("name");
-            String addr = bundle.getString("addr");
-            store_name.setText(store + "이(가) 선택되엇습니다.");
-            store_addr.setText(addr);
+            store = bundle.getParcelable("store");
+            store_name.setText(store.getName() + "이(가) 선택되엇습니다.");
+            store_addr.setText(store.getRoadAddr());
         }
+
+        final MapView mapView = new MapView(this);
+        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+        mapViewContainer.addView(mapView);
+
+        MapPOIItem marker = new MapPOIItem();
+        marker.setItemName(store.getName());
+        marker.setTag(0);
+        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Double.valueOf(store.getLat()), Double.valueOf(store.getLongt())));
+        marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 기본으로 제공하는 BluePin 마커 모양.
+        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+        mapView.addPOIItem(marker);
+
+        GpsTracker gpsTracker = new GpsTracker(this); // GpsTracker 객체 생성
+        double latitude = gpsTracker.getLatitude(); // 위도
+        double longitude = gpsTracker.getLongitude(); //경도
+
+        MapPOIItem here = new MapPOIItem();
+        here.setItemName("현 위치");
+        here.setTag(0);
+        here.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+        here.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 기본으로 제공하는 BluePin 마커 모양.
+        here.setSelectedMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+        mapView.addPOIItem(here);
+
+        mapView.fitMapViewAreaToShowAllPOIItems();
+        mapView.zoomOut(true);
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
