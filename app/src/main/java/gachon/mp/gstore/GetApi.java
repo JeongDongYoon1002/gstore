@@ -113,7 +113,9 @@ public class GetApi {
                         tag= xpp.getName(); //테그 이름 얻어오기
 
                         if(tag.equals("row")){
-                            stores.add(new Store(name, lat, longt, sigun, type, addr, roadAddr, tel, zip));
+                            if(lat != null && longt != null) {
+                                stores.add(new Store(name, lat, longt, sigun, type, addr, roadAddr, tel, zip));
+                            }
                         }
                         break;
                 }
