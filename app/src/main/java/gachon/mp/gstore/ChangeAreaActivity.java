@@ -40,7 +40,6 @@ public class ChangeAreaActivity extends AppCompatActivity {
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     String area, areaTown;
-    ArrayList<Store> allStores = new ArrayList<>();
     String SIGUN = "";
     String DONG = "";
     TextView textView;
@@ -639,26 +638,6 @@ public class ChangeAreaActivity extends AppCompatActivity {
                 mybundle.putString("SIGUN", SIGUN);
                 mybundle.putString("DONG", DONG);
 
-//                <쓰레드>
-//                Thread thread = new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        GetApi parser = new GetApi();
-//                        allStores = parser.getAllXmlData(SIGUN, DONG);
-//                        mybundle.putParcelableArrayList("all_stores", allStores);
-//                        intent.putExtras(mybundle);
-//                        startActivity(intent);
-//                        finish();
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                            }
-//                        });
-//                    }
-//                });
-//
-//                try{ thread.join(); }catch (InterruptedException e) { }
 
                 intent.putExtras(mybundle);
                 startActivity(intent);

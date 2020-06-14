@@ -38,7 +38,6 @@ public class storeViewAcitvity extends AppCompatActivity {
 
         Intent data = getIntent();
         if(data != null) {
-
             Bundle bundle = data.getExtras();
             store = bundle.getParcelable("store");
             store_name.setText(store.getName() + "이(가) 선택되엇습니다.");

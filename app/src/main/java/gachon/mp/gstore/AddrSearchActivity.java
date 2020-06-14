@@ -45,15 +45,13 @@ public class AddrSearchActivity extends AppCompatActivity {
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     String area, areaTown;
+    String SIGUN = "";
+    String DONG = "";
+    TextView textView;
     ArrayAdapter<CharSequence> adspin1, adspin2;
     Button complete_btn;
-
-    ListView listView;
-    ScrollView scrollView;
-    ImageButton back_btn;
     Button gps_btn;
-    SearchView searchView;
-    TextView title;
+    ImageButton back_btn;
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
@@ -71,42 +69,51 @@ public class AddrSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addr_search);
 
-
         if (!checkLocationServicesStatus()) {
 
             showDialogForLocationServiceSetting();
-        }else {
+        } else {
 
             checkRunTimePermission();
         }
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
-
-
-        toolbar.setTitleTextColor(Color.parseColor("#ffff33")); //제목의 칼라
-        // toolbar.setTitle("경기도 지역화폐");
-        //toolbar.setSubtitle("123123"); //부제목 넣기
-        //toolbar.setNavigationIcon(R.mipmap.ic_launcher); //제목앞에 아이콘 넣기
+        toolbar.setTitle("지역 설정");
         setSupportActionBar(toolbar);
 
-        title = findViewById(R.id.title);
-        scrollView = findViewById(R.id.scrollView);
-        listView = (ListView) findViewById(R.id.listview);
-        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        back_btn = findViewById(R.id.back_btn);
         gps_btn = (Button) findViewById(R.id.gps_btn);
-        searchView = findViewById(R.id.searchView);
-
-        title.setText("지역 설정");
-
         complete_btn = (Button) findViewById(R.id.complete_btn);
         final Spinner spin1 = (Spinner)findViewById(R.id.spinnerArea);
         final Spinner spin2 = (Spinner)findViewById(R.id.spinnerArea2);
 
-
+        //adspin1 = ArrayAdapter.createFromResource(this, R.array.spinner_do, R.layout.spinneritem);
         adspin1 = ArrayAdapter.createFromResource(this, R.array.spinner_do, R.layout.spinneritem);
-
+        // adspin1.setDropDownViewResource(R.layout.spinneritem);
         adspin1.setDropDownViewResource(R.layout.spinneritem);
         spin1.setAdapter(adspin1);
+
+
+
+        Intent data = getIntent();
+        if(data != null) {
+            Bundle bundle = data.getExtras();
+            SIGUN = bundle.getString("SIGUN");
+            DONG = bundle.getString("DONG");
+            if(DONG.split(" ").length == 1){
+                area = SIGUN;
+                areaTown = DONG;
+            }else {
+                area = SIGUN + " " + DONG.split(" ")[0];
+                areaTown = DONG.split(" ")[1];
+            }
+        }
+
+
+
+        int areaPosition = adspin1.getPosition(area);
+        spin1.setSelection(areaPosition);
+
         spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -115,6 +122,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Gapyoung, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
                         @Override
@@ -133,6 +142,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Goyang, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
                         @Override
@@ -150,6 +161,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Gwacheon, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
                         @Override
@@ -168,6 +181,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Gwangmyeong, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -182,6 +197,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Gwangju, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -196,6 +213,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Guri, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -210,6 +229,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Gunpo, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -224,6 +245,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Namyangju, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -238,6 +261,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Dongducheon, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -252,6 +277,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Bucheon, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -266,6 +293,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_SeongNamBundang,R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -280,6 +309,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_SeongNamSujeong, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -294,6 +325,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_SeongNamJungwon, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -308,6 +341,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_SuwonGwonseongu, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -323,6 +358,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_SuwonYeongtong, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -338,6 +375,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_SuwonJangan, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -353,6 +392,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_SuwonPaldal, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -367,6 +408,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_AnsanDanwon, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -382,6 +425,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_AnsanSanglok, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -396,6 +441,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Anseong, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -410,6 +457,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_AnyangDongan, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -425,6 +474,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_AnyangManan, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -439,6 +490,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Yangju, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -453,6 +506,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Yangpeong, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -467,6 +522,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Yeonchon, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -481,6 +538,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Osan, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -495,6 +554,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_YonginGiheung, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -509,6 +570,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_YonginSuji, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -524,6 +587,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_YonginCheoin, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -538,6 +603,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Uiwang, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -552,6 +619,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Uijeongbu, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -566,6 +635,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Icheon, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -580,6 +651,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Paju, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -594,6 +667,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Pyeongtaek, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -608,6 +683,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Pocheon, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -622,6 +699,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Hanam, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -636,6 +715,8 @@ public class AddrSearchActivity extends AppCompatActivity {
                     adspin2 = ArrayAdapter.createFromResource(AddrSearchActivity.this, R.array.spinner_do_Hwaseong, R.layout.spinneritem);
                     adspin2.setDropDownViewResource(R.layout.spinneritem);
                     spin2.setAdapter(adspin2);
+                    int areaTownPosition = adspin2.getPosition(areaTown);
+                    spin2.setSelection(areaTownPosition);
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -659,34 +740,25 @@ public class AddrSearchActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 Bundle mybundle = new Bundle();
 
-                mybundle.putString("area", area);
-                mybundle.putString("areaTown", areaTown);
+                String[] areas = area.split(" ");
+                if(areas.length == 2){
+                    SIGUN = area.split(" ")[0];
+                    DONG = area.split(" ")[1] + " " + areaTown;
+                }else {
+                    SIGUN = areas[0];
+                    DONG = areaTown;
+                }
+
+                mybundle.putString("SIGUN", SIGUN);
+                mybundle.putString("DONG", DONG);
+
+
                 intent.putExtras(mybundle);
                 startActivity(intent);
                 finish();
+
             }
         });
-
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent data = getIntent();
-                if(data != null) {
-
-                    Bundle bundle = data.getExtras();
-                    String outAddr1 = bundle.getString("addr");
-
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    Bundle mybundle = new Bundle();
-                    mybundle.putString("addr", outAddr1);
-                    intent.putExtras(mybundle);
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                }
-            }
-        });
-
 
         gps_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -701,28 +773,54 @@ public class AddrSearchActivity extends AppCompatActivity {
 
                 String address = getCurrentAddress(latitude, longitude);
                 String split[] = address.split(" ");
-
                 area = split[2];
-
                 if(!split[3].substring(split[3].length()-1).equals("동")) {
-
                     area = area + " " + split[3];
                     if(split[4].substring(split[4].length()-1).equals("동")) {
-
                         areaTown = split[4];
                     }
                 }
                 else {
-
                     areaTown = split[3];
                 }
 
-                mybundle.putString("area", area);
-                mybundle.putString("areaTown", areaTown);
+                String[] areas = area.split(" ");
+                if(areas.length == 2){
+                    SIGUN = area.split(" ")[0];
+                    DONG = area.split(" ")[1] + " " + areaTown;
+                }else {
+                    SIGUN = areas[0];
+                    DONG = areaTown;
+                }
+
+                mybundle.putString("SIGUN", SIGUN);
+                mybundle.putString("DONG", DONG);
                 intent.putExtras(mybundle);
                 startActivity(intent);
                 finish();
 
+            }
+        });
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent data = getIntent();
+                if(data != null) {
+
+                    Bundle bundle = data.getExtras();
+                    SIGUN = bundle.getString("SIGUN");
+                    DONG = bundle.getString("DONG");
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Bundle mybundle = new Bundle();
+                    mybundle.putString("SIGUN", SIGUN);
+                    mybundle.putString("DONG", DONG);
+                    intent.putExtras(mybundle);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -904,5 +1002,8 @@ public class AddrSearchActivity extends AppCompatActivity {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
+
 }
+
 

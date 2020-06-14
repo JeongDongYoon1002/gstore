@@ -74,9 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         //toolbar.setTitleTextColor(Color.parseColor("#ffff33")); //제목의 칼라
-        toolbar.setTitle("경기도 지역화폐");
-        //toolbar.setSubtitle("123123"); //부제목 넣기
-        //toolbar.setNavigationIcon(R.mipmap.ic_launcher); //제목앞에 아이콘 넣기
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.logo1); //제목앞에 아이콘 넣기'
         setSupportActionBar(toolbar);
 
        // add_btn = (ImageButton) findViewById(R.id.add_btn);
@@ -202,9 +201,11 @@ public class MainActivity extends AppCompatActivity {
         findAdr_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChangeAreaActivity.class);
-                SIGUN="";
-                DONG="";
+                Intent intent = new Intent(getApplicationContext(), AddrSearchActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("SIGUN", SIGUN);
+                bundle.putString("DONG", DONG);
+                intent.putExtras(bundle);
                 startActivityForResult(intent, 1122);
                 finish();
             }

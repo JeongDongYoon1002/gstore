@@ -27,10 +27,9 @@
                  
         android:usesCleartextTraffic="true">
 
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="6100f1927b82aaf191f3d69d2d0f639a"/>
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="fa91addf7bb4300437c041018dec9724"/>
 
-        <activity android:name=".LoadingActivity">
-
+        <activity android:name=".startActivity" android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,16 +38,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".ListViewFragment"></activity>
-        <activity android:name=".AddrSearchActivity"></activity>
+        <activity android:name=".AddrSearchActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".MapFragment"></activity>
         <activity android:name=".SearchFragment"></activity>
         <activity android:name=".FavoriteFragment"></activity>
-        <activity android:name=".ChangeAreaActivity"></activity>
-        <activity android:name=".storeViewAcitvity"></activity>
-        <activity android:name=".PopUpActivity" android:theme="@android:style/Theme.Dialog" />
-        <activity android:name=".AddStoreActivity" android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".ChangeAreaActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".storeViewAcitvity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".PopUpActivity" android:theme="@android:style/Theme.Dialog" android:screenOrientation="portrait"/>
+        <activity android:name=".AddStoreActivity" android:theme="@android:style/Theme.Dialog" android:screenOrientation="portrait"/>
 
 
 
