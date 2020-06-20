@@ -25,7 +25,6 @@ import java.util.List;
 public class FavoriteFragment extends Fragment {
 
     private static final String SETTINGS_PLAYER_JSON = "settings_item_json";
-    //String[] names = {"모바일 프로그래밍", "컴퓨터 프로그래밍", "자료구조", "JEONG", "RHO", "LEE", "CHOI", "KIM", "JEONG", "RHO", "LEE", "CHOI", "KIM", "JEONG", "RHO"};
     ListView listView;
     ScrollView scrollView;
     ArrayList<Store> stores;
