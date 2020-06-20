@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -62,6 +63,7 @@ public class ChangeAreaActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle("지역 설정");
+        toolbar.setTitleTextColor(Color.BLACK);
         setSupportActionBar(toolbar);
 
         gps_btn = (Button) findViewById(R.id.gps_btn);

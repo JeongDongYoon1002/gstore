@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             loadingMessage.setText("");
-                            map_btn.performClick();
+                            list_btn.performClick();
                         }
                     });
                 }

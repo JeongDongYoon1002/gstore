@@ -16,7 +16,6 @@
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:iconifiedByDefault="false"
             android:imeOptions="actionDone"
             android:queryHint="가맹점 이름을 입력해주세요.">

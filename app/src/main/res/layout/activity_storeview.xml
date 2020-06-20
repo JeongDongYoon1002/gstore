@@ -14,13 +14,15 @@
         android:layout_alignParentTop="true"
         android:background="@color/back_color"
         android:minHeight="?attr/actionBarSize"
+        android:gravity="center_vertical"
         android:theme="@style/toolbarTheme">
 
         <ImageButton
             android:id="@+id/back_btn"
             app:srcCompat="@drawable/ic_arrow_back_black_24dp"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="2dp"
             android:layout_gravity="left"
             android:background="@color/transparent"
             tools:ignore="VectorDrawableCompat" />
@@ -31,6 +33,8 @@
             android:layout_height="match_parent"
             android:textSize="25dp"
             android:fontFamily="@font/nanum"
+            android:paddingLeft="10dp"
+            android:textColor="#000000"
             android:text="가맹점 보기" />
 
     </androidx.appcompat.widget.Toolbar>

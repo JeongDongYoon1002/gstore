@@ -74,24 +74,6 @@
 
 
         <Button
-            android:id="@+id/map_btn"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:background="@color/transparent"
-            android:drawableTop="@drawable/ic_map_black_24dp"
-            android:paddingTop="20dp"
-            android:fontFamily="@font/nanum"
-            android:text="지도로 보기" />
-
-        <View
-            android:layout_width="0.3dp"
-            android:layout_height="80dp"
-            android:background="#555"
-            android:layout_marginLeft="2.5dp"
-            android:layout_marginRight="2.5dp"/>
-
-        <Button
             android:id="@+id/list_btn"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -101,6 +83,26 @@
             android:paddingTop="15dp"
             android:fontFamily="@font/nanum"
             android:text="리스트 보기" />
+
+
+
+        <View
+            android:layout_width="0.3dp"
+            android:layout_height="80dp"
+            android:background="#555"
+            android:layout_marginLeft="2.5dp"
+            android:layout_marginRight="2.5dp"/>
+
+        <Button
+            android:id="@+id/map_btn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:drawableTop="@drawable/ic_map_black_24dp"
+            android:paddingTop="20dp"
+            android:fontFamily="@font/nanum"
+            android:text="지도로 보기" />
 
         <View
             android:layout_width="0.3dp"
@@ -120,13 +122,13 @@
             android:fontFamily="@font/nanum"
             android:text="검색하기" />
 
+
         <View
             android:layout_width="0.3dp"
             android:layout_height="80dp"
             android:background="#555"
             android:layout_marginLeft="2.5dp"
             android:layout_marginRight="2.5dp"/>
-
 
         <Button
             android:id="@+id/favorite_btn"

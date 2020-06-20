@@ -23,19 +23,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="지역을 선택해주세요."
         android:fontFamily="@font/nanum"
         android:gravity="center"
-        android:textSize="20dp"/>
+        android:text="지역을 선택해주세요."
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanum"
+        android:gravity="center"
+        android:text="선택한 지역의 가맹점을 보여줍니다."
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="선택한 지역의 가맹점을 보여줍니다.."
         android:fontFamily="@font/nanum"
         android:gravity="center"
-        android:textSize="20dp"/>
+        android:textColor="#F78181"
+        android:text="※선택한 지역의 가맹점이 많을시, 시간이 소요될 수 있습니다."
+        android:textSize="12dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
