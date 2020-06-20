@@ -40,6 +40,7 @@ public class PopUpActivity extends Activity {
 
     Store store;
     ArrayList<Store> stores;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,21 +49,21 @@ public class PopUpActivity extends Activity {
         setContentView(R.layout.activity_popup);
 
 
-        store_name = (TextView)findViewById(R.id.store_name);
-        store_type = (TextView)findViewById(R.id.store_type);
-        store_addr = (TextView)findViewById(R.id.store_addr);
-        store_roadAddr = (TextView)findViewById(R.id.store_roadAddr);
-        store_tel = (TextView)findViewById(R.id.store_tel);
+        store_name = (TextView) findViewById(R.id.store_name);
+        store_type = (TextView) findViewById(R.id.store_type);
+        store_addr = (TextView) findViewById(R.id.store_addr);
+        store_roadAddr = (TextView) findViewById(R.id.store_roadAddr);
+        store_tel = (TextView) findViewById(R.id.store_tel);
 
-        map_btn = (Button)findViewById(R.id.map_btn);
-        call_btn = (Button)findViewById(R.id.call_btn);
+        map_btn = (Button) findViewById(R.id.map_btn);
+        call_btn = (Button) findViewById(R.id.call_btn);
         favorite_btn = (Button) findViewById(R.id.favorite_btn);
         ok_btn = (Button) findViewById(R.id.ok_btn);
 
-        stores=new ArrayList<Store>();
+        stores = new ArrayList<Store>();
 
         Intent data = getIntent();
-        if(data != null) {
+        if (data != null) {
 
             Bundle bundle = data.getExtras();
             store = bundle.getParcelable("store");
@@ -72,9 +73,9 @@ public class PopUpActivity extends Activity {
             store_type.setText(store.getType());
             store_roadAddr.setText(store.getRoadAddr());
 
-            if(DONG.equals("")){
+            if (DONG.equals("")) {
                 store_addr.setText(store.getAddr());
-            } else{
+            } else {
                 store_addr.setText(store.getAddr().split(DONG)[1]);
             }
 
@@ -87,26 +88,23 @@ public class PopUpActivity extends Activity {
 
             for (Store str : stores) {
                 if (str.getName().equals(store.getName())) {
-                    if(store.getType()==null||str.getType()==null){
-                        if(str.getRoadAddr()==null||store.getRoadAddr()==null){
-                            flag=1;
+                    if (store.getType() == null || str.getType() == null) {
+                        if (str.getRoadAddr() == null || store.getRoadAddr() == null) {
+                            flag = 1;
                             break;
-                        }
-                        else if(str.getRoadAddr()!=null&&store.getRoadAddr()!=null){
+                        } else if (str.getRoadAddr() != null && store.getRoadAddr() != null) {
                             if (str.getRoadAddr().equals(store.getRoadAddr())) {
                                 flag = 1;
                                 break;
                             } else
                                 flag = 0;
                         }
-                    }
-                    else if(str.getType()!=null&&store.getType()!=null){
+                    } else if (str.getType() != null && store.getType() != null) {
                         if (str.getType().equals(store.getType())) {
-                            if(str.getRoadAddr()==null||store.getRoadAddr()==null){
-                                flag=1;
+                            if (str.getRoadAddr() == null || store.getRoadAddr() == null) {
+                                flag = 1;
                                 break;
-                            }
-                            else if(str.getRoadAddr()!=null&&store.getRoadAddr()!=null){
+                            } else if (str.getRoadAddr() != null && store.getRoadAddr() != null) {
                                 if (str.getRoadAddr().equals(store.getRoadAddr())) {
                                     flag = 1;
                                     break;
@@ -121,11 +119,10 @@ public class PopUpActivity extends Activity {
                 }
             }
 
-            if(flag==1){
-                favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_black_24dp,0,0);
-            }
-            else if(flag==0){
-                favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_border_black_24dp,0,0);
+            if (flag == 1) {
+                favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_black_24dp, 0, 0);
+            } else if (flag == 0) {
+                favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_border_black_24dp, 0, 0);
             }
         }
 
@@ -154,7 +151,7 @@ public class PopUpActivity extends Activity {
             @Override
             public void onClick(View view) {
                 String phone = store_tel.getText().toString();
-                Intent intent= new Intent(Intent.ACTION_DIAL, Uri.parse(("tel:"+phone)));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(("tel:" + phone)));
                 startActivity(intent);
                 Toast.makeText(getApplicationContext(), "전화걸기", Toast.LENGTH_LONG).show();
             }
@@ -166,30 +163,27 @@ public class PopUpActivity extends Activity {
 
                 if (getStoreArrayPref(getApplicationContext(), SETTINGS_PLAYER_JSON) != null) {
                     stores = getStoreArrayPref(getApplicationContext(), SETTINGS_PLAYER_JSON);
-                    int flag=0;
+                    int flag = 0;
 
                     for (Store str : stores) {
                         if (str.getName().equals(store.getName())) {
-                            if(store.getType()==null||str.getType()==null){
-                                if(str.getRoadAddr()==null||store.getRoadAddr()==null){
-                                    flag=1;
+                            if (store.getType() == null || str.getType() == null) {
+                                if (str.getRoadAddr() == null || store.getRoadAddr() == null) {
+                                    flag = 1;
                                     break;
-                                }
-                                else if(str.getRoadAddr()!=null&&store.getRoadAddr()!=null){
+                                } else if (str.getRoadAddr() != null && store.getRoadAddr() != null) {
                                     if (str.getRoadAddr().equals(store.getRoadAddr())) {
                                         flag = 1;
                                         break;
                                     } else
                                         flag = 0;
                                 }
-                            }
-                            else if(str.getType()!=null&&store.getType()!=null){
+                            } else if (str.getType() != null && store.getType() != null) {
                                 if (str.getType().equals(store.getType())) {
-                                    if(str.getRoadAddr()==null||store.getRoadAddr()==null){
-                                        flag=1;
+                                    if (str.getRoadAddr() == null || store.getRoadAddr() == null) {
+                                        flag = 1;
                                         break;
-                                    }
-                                    else if(str.getRoadAddr()!=null&&store.getRoadAddr()!=null){
+                                    } else if (str.getRoadAddr() != null && store.getRoadAddr() != null) {
                                         if (str.getRoadAddr().equals(store.getRoadAddr())) {
                                             flag = 1;
                                             break;
@@ -208,34 +202,31 @@ public class PopUpActivity extends Activity {
                     if (flag == 0) {
                         stores.add(store);
                         try {
-                            setStoreArrayPref(getApplicationContext(),SETTINGS_PLAYER_JSON,stores);
+                            setStoreArrayPref(getApplicationContext(), SETTINGS_PLAYER_JSON, stores);
                             Toast.makeText(getApplicationContext(), "즐겨찾기 추가되었습니다.", Toast.LENGTH_LONG).show();
-                            stores=getStoreArrayPref(getApplicationContext(),SETTINGS_PLAYER_JSON);
-                            favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_black_24dp,0,0);
+                            stores = getStoreArrayPref(getApplicationContext(), SETTINGS_PLAYER_JSON);
+                            favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_black_24dp, 0, 0);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else if(flag==1){
+                    } else if (flag == 1) {
                         try {
-                            deleteStore(getApplicationContext(),SETTINGS_PLAYER_JSON,store,stores);
+                            deleteStore(getApplicationContext(), SETTINGS_PLAYER_JSON, store, stores);
                             Toast.makeText(getApplicationContext(), "즐겨찾기 해제되었습니다.", Toast.LENGTH_LONG).show();
-                            stores=getStoreArrayPref(getApplicationContext(),SETTINGS_PLAYER_JSON);
-                            favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_border_black_24dp,0,0);
+                            stores = getStoreArrayPref(getApplicationContext(), SETTINGS_PLAYER_JSON);
+                            favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_border_black_24dp, 0, 0);
                             System.out.println(stores);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                }
-
-                else{
+                } else {
                     stores.add(store);
                     try {
-                        setStoreArrayPref(getApplicationContext(),SETTINGS_PLAYER_JSON,stores);
+                        setStoreArrayPref(getApplicationContext(), SETTINGS_PLAYER_JSON, stores);
                         Toast.makeText(getApplicationContext(), "즐겨찾기 추가되었습니다.", Toast.LENGTH_LONG).show();
-                        stores=getStoreArrayPref(getApplicationContext(),SETTINGS_PLAYER_JSON);
-                        favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_black_24dp,0,0);
+                        stores = getStoreArrayPref(getApplicationContext(), SETTINGS_PLAYER_JSON);
+                        favorite_btn.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_star_black_24dp, 0, 0);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -249,7 +240,7 @@ public class PopUpActivity extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //바깥레이어 클릭시 안닫히게
-        if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
+        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             return false;
         }
         return true;
@@ -292,45 +283,40 @@ public class PopUpActivity extends Activity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
 
-        int index=0;
+        int index = 0;
         for (Store s : strs) {
-            if(s.getName().equals(str.getName())){
-                if(s.getType()==null||str.getType()==null){
-                    if(s.getRoadAddr()==null||str.getRoadAddr()==null){
+            if (s.getName().equals(str.getName())) {
+                if (s.getType() == null || str.getType() == null) {
+                    if (s.getRoadAddr() == null || str.getRoadAddr() == null) {
                         break;
-                    }
-                    else if(s.getRoadAddr()!=null&&str.getRoadAddr()!=null){
-                        if(s.getRoadAddr().equals(str.getRoadAddr())){
+                    } else if (s.getRoadAddr() != null && str.getRoadAddr() != null) {
+                        if (s.getRoadAddr().equals(str.getRoadAddr())) {
                             break;
-                        }
-                        else{
-                            index+=1;
+                        } else {
+                            index += 1;
                         }
                     }
-                }
-                else if(s.getType()!=null&&s.getType()!=null){
-                    if(s.getType().equals(str.getType())){
-                        if(s.getRoadAddr()==null||str.getRoadAddr()==null){
+                } else if (s.getType() != null && s.getType() != null) {
+                    if (s.getType().equals(str.getType())) {
+                        if (s.getRoadAddr() == null || str.getRoadAddr() == null) {
                             break;
-                        }
-                        else if(s.getRoadAddr()!=null&&str.getRoadAddr()!=null){
-                            if(s.getRoadAddr().equals(str.getRoadAddr())){
+                        } else if (s.getRoadAddr() != null && str.getRoadAddr() != null) {
+                            if (s.getRoadAddr().equals(str.getRoadAddr())) {
                                 break;
-                            }
-                            else{
-                                index+=1;
+                            } else {
+                                index += 1;
                             }
                         }
-                    }else{
-                        index+=1;
+                    } else {
+                        index += 1;
                     }
                 }
-            }else{
-                index+=1;
+            } else {
+                index += 1;
             }
         }
 
-        if(index<strs.size()){
+        if (index < strs.size()) {
             strs.remove(index);
         }
 
@@ -340,6 +326,6 @@ public class PopUpActivity extends Activity {
         editor.clear();
         editor.commit();
 
-        setStoreArrayPref(context,key,strs);
+        setStoreArrayPref(context, key, strs);
     }
 }

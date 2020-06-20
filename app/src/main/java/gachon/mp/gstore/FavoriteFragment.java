@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,20 +31,24 @@ public class FavoriteFragment extends Fragment {
     ArrayList<Store> stores;
     String SIGUN = "";
     String DONG = "";
+    TextView list_title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = (ViewGroup) inflater.inflate(R.layout.fragment_listview, container, false);
 
-        listView = (ListView)rootView.findViewById(R.id.listview);
-        scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
+        listView = (ListView) rootView.findViewById(R.id.listview);
+        scrollView = (ScrollView) rootView.findViewById(R.id.scrollView);
+        list_title = (TextView) rootView.findViewById(R.id.list_title);
+
+        list_title.setText("즐겨찾기 가맹점 리스트");
 
         scrollView.setScrollbarFadingEnabled(true);
 
-        stores=new ArrayList<Store>();
-        if(getStoreArrayPref(getActivity(), SETTINGS_PLAYER_JSON) != null){
-            stores=getStoreArrayPref(getActivity(),SETTINGS_PLAYER_JSON);
+        stores = new ArrayList<Store>();
+        if (getStoreArrayPref(getActivity(), SETTINGS_PLAYER_JSON) != null) {
+            stores = getStoreArrayPref(getActivity(), SETTINGS_PLAYER_JSON);
         }
 
         ArrayAdapter<Store> adapter = new StoreAdapter(getActivity(), stores, listView);
@@ -57,7 +62,7 @@ public class FavoriteFragment extends Fragment {
 
                 Store obj = (Store) listView.getAdapter().getItem(position);
 
-                SIGUN=obj.getSigun();
+                SIGUN = obj.getSigun();
 
                 Bundle mybundle = new Bundle();
                 mybundle.putParcelable("store", obj);

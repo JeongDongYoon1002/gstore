@@ -10,10 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ public class ListViewFragment extends Fragment {
     ScrollView scrollView;
     String SIGUN = "";
     String DONG = "";
-
+    TextView list_title;
     public static ListViewFragment newInstance(List<Store> stores) {
         ListViewFragment fragment = new ListViewFragment();
         Bundle bundle = new Bundle();
@@ -54,6 +57,8 @@ public class ListViewFragment extends Fragment {
 
         listView = (ListView)rootView.findViewById(R.id.listview);
         scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
+        list_title = (TextView)rootView.findViewById(R.id.list_title);
+        list_title.setText("지역화폐 가맹점 리스트");
 
         scrollView.setScrollbarFadingEnabled(true);
 
