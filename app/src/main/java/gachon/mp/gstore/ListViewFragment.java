@@ -57,29 +57,33 @@ public class ListViewFragment extends Fragment {
 
         listView = (ListView)rootView.findViewById(R.id.listview);
         scrollView = (ScrollView)rootView.findViewById(R.id.scrollView);
-        list_title = (TextView)rootView.findViewById(R.id.list_title);
-        list_title.setText("지역화폐 가맹점 리스트");
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.listview_header_listview, listView, false);
 
         scrollView.setScrollbarFadingEnabled(true);
 
         StoreAdapter storeAdapter = new StoreAdapter(getActivity(), listStores, listView);
+        listView.addHeaderView(header);
         listView.setAdapter(storeAdapter);
+        if(listStores.size() == 0){
+            TextView loadingMessage = getActivity().findViewById(R.id.loadingMessage);
+            loadingMessage.setText("지역화폐 가맹점이 존재해지 않습니다.");
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position != 0) {
+                    Intent intent = new Intent(getActivity(), PopUpActivity.class);
 
-                Intent intent = new Intent(getActivity(), PopUpActivity.class);
+                    Store obj = (Store) listView.getAdapter().getItem(position);
 
-                Store obj = (Store) listView.getAdapter().getItem(position);
-
-                Bundle mybundle = new Bundle();
-                mybundle.putParcelable("store", obj);
-                mybundle.putString("SIGUN", SIGUN);
-                mybundle.putString("DONG", DONG);
-                intent.putExtras(mybundle);
-                startActivity(intent);
-
+                    Bundle mybundle = new Bundle();
+                    mybundle.putParcelable("store", obj);
+                    mybundle.putString("SIGUN", SIGUN);
+                    mybundle.putString("DONG", DONG);
+                    intent.putExtras(mybundle);
+                    startActivity(intent);
+                }
 
             }
         });

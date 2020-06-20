@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -40,18 +41,20 @@ public class FavoriteFragment extends Fragment {
 
         listView = (ListView) rootView.findViewById(R.id.listview);
         scrollView = (ScrollView) rootView.findViewById(R.id.scrollView);
-        list_title = (TextView) rootView.findViewById(R.id.list_title);
-
-        list_title.setText("즐겨찾기 가맹점 리스트");
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.listview_header_favorite, listView, false);
 
         scrollView.setScrollbarFadingEnabled(true);
 
         stores = new ArrayList<Store>();
         if (getStoreArrayPref(getActivity(), SETTINGS_PLAYER_JSON) != null) {
             stores = getStoreArrayPref(getActivity(), SETTINGS_PLAYER_JSON);
+        } else {
+            TextView loadingMessage = getActivity().findViewById(R.id.loadingMessage);
+            loadingMessage.setText("즐겨찾기 가맹점이 존재해지 않습니다.");
         }
 
         ArrayAdapter<Store> adapter = new StoreAdapter(getActivity(), stores, listView);
+        listView.addHeaderView(header);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

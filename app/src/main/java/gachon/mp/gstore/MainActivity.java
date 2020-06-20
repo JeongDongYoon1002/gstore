@@ -52,12 +52,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
         switch (curId) {
-            case R.id.add_store:
-
-                Intent intent = new Intent(this, AddStoreActivity.class);
+            case R.id.about:
+                Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
-
                 break;
+            case R.id.contact:
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.setType("plain/Text");
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"eurohand@naver.com"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "<" + getString(R.string.app_name) + " 문의>");
+                email.putExtra(Intent.EXTRA_TEXT, "기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content):\n");
+                email.setType("message/rfc822");
+                startActivity(email);
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -139,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadingMessage.setText("");
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("stores_key", stores);
                 bundle.putString("SIGUN", SIGUN);
@@ -156,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         list_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadingMessage.setText("");
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("stores_key", stores);
                 bundle.putString("SIGUN", SIGUN);
@@ -173,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadingMessage.setText("");
                 Bundle bundle = new Bundle();
                 bundle.putString("SIGUN", SIGUN);
                 bundle.putString("DONG", DONG);
@@ -189,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
         favorite_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingMessage.setText("");
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, favoriteFragment).commit();
                 map_btn.setBackgroundColor(Color.parseColor("#00ff0000"));
                 list_btn.setBackgroundColor(Color.parseColor("#00ff0000"));

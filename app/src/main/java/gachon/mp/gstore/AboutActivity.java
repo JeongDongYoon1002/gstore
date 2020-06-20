@@ -9,36 +9,22 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class AddStoreActivity extends Activity {
+public class AboutActivity extends Activity {
 
     Button ok_btn;
-    Button cancel_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_addstore);
+        setContentView(R.layout.activity_about);
 
 
-        cancel_btn = (Button) findViewById(R.id.cancel_btn) ;
         ok_btn = (Button) findViewById(R.id.ok_btn);
 
 
         ok_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "가맹점 등록 요청 되었습니다.", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
-            }
-        });
-
-
-
-        cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);

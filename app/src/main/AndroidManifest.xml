@@ -47,9 +47,7 @@
         <activity android:name=".ChangeAreaActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".storeViewAcitvity" android:screenOrientation="portrait"></activity>
         <activity android:name=".PopUpActivity" android:theme="@android:style/Theme.Dialog" android:screenOrientation="portrait"/>
-        <activity android:name=".AddStoreActivity" android:theme="@android:style/Theme.Dialog" android:screenOrientation="portrait"/>
-
-
+        <activity android:name=".AboutActivity" android:theme="@android:style/Theme.Dialog" android:screenOrientation="portrait"/>
 
 
     </application>

@@ -53,11 +53,23 @@ public class AddrSearchActivity extends AppCompatActivity {
     Button gps_btn;
     ImageButton back_btn;
 
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int curId = item.getItemId();
         switch (curId) {
-            case R.id.add_store:
-                Toast.makeText(this, "가맹점 등록 메뉴가 선택 됨", Toast.LENGTH_SHORT).show();
+            case R.id.about:
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.contact:
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.setType("plain/Text");
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"eurohand@naver.com"});
+                email.putExtra(Intent.EXTRA_SUBJECT, "<" + getString(R.string.app_name) + " 문의>");
+                email.putExtra(Intent.EXTRA_TEXT, "기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content):\n");
+                email.setType("message/rfc822");
+                startActivity(email);
                 break;
 
         }
